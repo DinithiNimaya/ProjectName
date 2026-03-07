@@ -275,9 +275,9 @@ And the following structure from the `/study-plan` endpoint:
 
 | Member | Role | Responsibilities |
 |---|---|---|
-| Member A | Database Engineer | PostgreSQL schema, seed data, query optimisation |
-| Member B | AI / Backend Engineer | FastAPI, OpenAI integration, resume parsing |
-| Member C | Frontend Engineer | Next.js UI, components, API integration |
+| Eric | Database Engineer | PostgreSQL schema, seed data, query optimisation |
+| Dinithi | AI / Backend Engineer | FastAPI, OpenAI integration, resume parsing |
+| Marilia | Frontend Engineer | Next.js UI, components, API integration |
 
 ---
 
