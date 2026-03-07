@@ -60,7 +60,7 @@ The system uses AI-powered semantic skill gap analysis to compare resume content
 
 ```
 auskillpath/
-├── frontend/                   # Next.js application (Member C)
+├── frontend/                   # Next.js application (Marilia)
 │   ├── app/
 │   │   ├── page.js             # Landing & onboarding page
 │   │   ├── upload/page.js      # Resume upload page
@@ -80,7 +80,7 @@ auskillpath/
 │       ├── api.js              # Centralised API call functions
 │       └── mockData.js         # Mock data for development
 │
-├── backend/                    # FastAPI application (Member B)
+├── backend/                    # FastAPI application (Dinithi)
 │   ├── main.py                 # FastAPI app entry point
 │   ├── routers/
 │   │   ├── upload.py           # File upload endpoint
@@ -91,7 +91,7 @@ auskillpath/
 │   │   └── ai_service.py       # OpenAI API integration
 │   └── requirements.txt
 │
-├── database/                   # PostgreSQL setup (Member A)
+├── database/                   # PostgreSQL setup (Eric)
 │   ├── models.py               # SQLAlchemy models
 │   ├── migrations/             # Alembic migration files
 │   └── seeds/                  # Seed data for roles and skills
