@@ -2,12 +2,12 @@
 -- PostgreSQL database dump
 --
 
-\restrict FlnyuLvDKR9AMWjguAwMsBm91Y8xHMxXaOqcJitqHA6ggoZmsCrHHoG3mw2gIAF
+\restrict BUDlM4JaD9xmyXEOHYxdnTUgsEGW0q7xgVDOwGI1xNk1ekw6MaMyfAJfOnxuMs4
 
 -- Dumped from database version 18.2
 -- Dumped by pg_dump version 18.2
 
--- Started on 2026-03-09 11:14:16
+-- Started on 2026-03-14 22:24:03
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -78,6 +78,7 @@ CREATE TABLE public.analyses (
     is_qualified boolean NOT NULL,
     percentage numeric(5,2) NOT NULL,
     analyzed_at timestamp without time zone DEFAULT now() NOT NULL,
+    motivational_summary text,
     CONSTRAINT analyses_percentage_check CHECK (((percentage >= (0)::numeric) AND (percentage <= (100)::numeric)))
 );
 
@@ -85,7 +86,7 @@ CREATE TABLE public.analyses (
 ALTER TABLE public.analyses OWNER TO postgres;
 
 --
--- TOC entry 5142 (class 0 OID 0)
+-- TOC entry 5147 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: TABLE analyses; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -94,7 +95,7 @@ COMMENT ON TABLE public.analyses IS 'AI analysis result of a resume against a ta
 
 
 --
--- TOC entry 5143 (class 0 OID 0)
+-- TOC entry 5148 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN analyses.is_qualified; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -103,7 +104,7 @@ COMMENT ON COLUMN public.analyses.is_qualified IS 'TRUE if percentage meets the 
 
 
 --
--- TOC entry 5144 (class 0 OID 0)
+-- TOC entry 5149 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN analyses.percentage; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -128,7 +129,7 @@ CREATE SEQUENCE public.analyses_analyze_id_seq
 ALTER SEQUENCE public.analyses_analyze_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5145 (class 0 OID 0)
+-- TOC entry 5150 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: analyses_analyze_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -152,7 +153,7 @@ CREATE TABLE public.analyze_skills (
 ALTER TABLE public.analyze_skills OWNER TO postgres;
 
 --
--- TOC entry 5146 (class 0 OID 0)
+-- TOC entry 5151 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: TABLE analyze_skills; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -161,7 +162,7 @@ COMMENT ON TABLE public.analyze_skills IS 'One row per skill detected in the ana
 
 
 --
--- TOC entry 5147 (class 0 OID 0)
+-- TOC entry 5152 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: COLUMN analyze_skills.skill_name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -170,7 +171,7 @@ COMMENT ON COLUMN public.analyze_skills.skill_name IS 'Skill name e.g. Power BI,
 
 
 --
--- TOC entry 5148 (class 0 OID 0)
+-- TOC entry 5153 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: COLUMN analyze_skills.status; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -195,7 +196,7 @@ CREATE SEQUENCE public.analyze_skills_skill_id_seq
 ALTER SEQUENCE public.analyze_skills_skill_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5149 (class 0 OID 0)
+-- TOC entry 5154 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: analyze_skills_skill_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -220,7 +221,7 @@ CREATE TABLE public.resumes (
 ALTER TABLE public.resumes OWNER TO postgres;
 
 --
--- TOC entry 5150 (class 0 OID 0)
+-- TOC entry 5155 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: TABLE resumes; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -229,7 +230,7 @@ COMMENT ON TABLE public.resumes IS 'Resume files uploaded by users (Screen 2)';
 
 
 --
--- TOC entry 5151 (class 0 OID 0)
+-- TOC entry 5156 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: COLUMN resumes.file_path; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -238,7 +239,7 @@ COMMENT ON COLUMN public.resumes.file_path IS 'Storage path or URL e.g. /uploads
 
 
 --
--- TOC entry 5152 (class 0 OID 0)
+-- TOC entry 5157 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: COLUMN resumes.file_type; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -263,7 +264,7 @@ CREATE SEQUENCE public.resumes_resume_id_seq
 ALTER SEQUENCE public.resumes_resume_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5153 (class 0 OID 0)
+-- TOC entry 5158 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: resumes_resume_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -285,7 +286,7 @@ CREATE TABLE public.roles (
 ALTER TABLE public.roles OWNER TO postgres;
 
 --
--- TOC entry 5154 (class 0 OID 0)
+-- TOC entry 5159 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: TABLE roles; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -294,7 +295,7 @@ COMMENT ON TABLE public.roles IS 'Master list of target job roles available in A
 
 
 --
--- TOC entry 5155 (class 0 OID 0)
+-- TOC entry 5160 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: COLUMN roles.role_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -303,7 +304,7 @@ COMMENT ON COLUMN public.roles.role_id IS 'Auto-incremented primary key';
 
 
 --
--- TOC entry 5156 (class 0 OID 0)
+-- TOC entry 5161 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: COLUMN roles.role_name; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -328,7 +329,7 @@ CREATE SEQUENCE public.roles_role_id_seq
 ALTER SEQUENCE public.roles_role_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5157 (class 0 OID 0)
+-- TOC entry 5162 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: roles_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -356,7 +357,7 @@ CREATE TABLE public.study_plan_details (
 ALTER TABLE public.study_plan_details OWNER TO postgres;
 
 --
--- TOC entry 5158 (class 0 OID 0)
+-- TOC entry 5163 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: TABLE study_plan_details; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -365,7 +366,7 @@ COMMENT ON TABLE public.study_plan_details IS 'One row per week in the study pla
 
 
 --
--- TOC entry 5159 (class 0 OID 0)
+-- TOC entry 5164 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: COLUMN study_plan_details.week_number; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -374,7 +375,7 @@ COMMENT ON COLUMN public.study_plan_details.week_number IS 'Week sequence: 1 = W
 
 
 --
--- TOC entry 5160 (class 0 OID 0)
+-- TOC entry 5165 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: COLUMN study_plan_details.estimated_hour; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -383,7 +384,7 @@ COMMENT ON COLUMN public.study_plan_details.estimated_hour IS 'Estimated hours s
 
 
 --
--- TOC entry 5161 (class 0 OID 0)
+-- TOC entry 5166 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: COLUMN study_plan_details.is_completed; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -408,7 +409,7 @@ CREATE SEQUENCE public.study_plan_details_detail_id_seq
 ALTER SEQUENCE public.study_plan_details_detail_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5162 (class 0 OID 0)
+-- TOC entry 5167 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: study_plan_details_detail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -426,14 +427,15 @@ CREATE TABLE public.study_plan_resources (
     detail_id integer NOT NULL,
     name character varying(255) NOT NULL,
     resource_link text,
-    format character varying(50)
+    format character varying(50),
+    CONSTRAINT chk_resource_format CHECK (((format)::text = ANY ((ARRAY['Free Course'::character varying, 'Video'::character varying, 'Course'::character varying, 'Hands-on'::character varying, 'Practice'::character varying, 'Article'::character varying, 'Docs'::character varying, 'Job Board'::character varying])::text[])))
 );
 
 
 ALTER TABLE public.study_plan_resources OWNER TO postgres;
 
 --
--- TOC entry 5163 (class 0 OID 0)
+-- TOC entry 5168 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: TABLE study_plan_resources; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -442,7 +444,7 @@ COMMENT ON TABLE public.study_plan_resources IS 'Resource links listed under eac
 
 
 --
--- TOC entry 5164 (class 0 OID 0)
+-- TOC entry 5169 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN study_plan_resources.resource_link; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -451,7 +453,7 @@ COMMENT ON COLUMN public.study_plan_resources.resource_link IS 'Full URL to the 
 
 
 --
--- TOC entry 5165 (class 0 OID 0)
+-- TOC entry 5170 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: COLUMN study_plan_resources.format; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -476,7 +478,7 @@ CREATE SEQUENCE public.study_plan_resources_resource_id_seq
 ALTER SEQUENCE public.study_plan_resources_resource_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5166 (class 0 OID 0)
+-- TOC entry 5171 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: study_plan_resources_resource_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -501,7 +503,7 @@ CREATE TABLE public.study_plan_tasks (
 ALTER TABLE public.study_plan_tasks OWNER TO postgres;
 
 --
--- TOC entry 5167 (class 0 OID 0)
+-- TOC entry 5172 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: TABLE study_plan_tasks; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -510,7 +512,7 @@ COMMENT ON TABLE public.study_plan_tasks IS 'Checkbox tasks inside each week acc
 
 
 --
--- TOC entry 5168 (class 0 OID 0)
+-- TOC entry 5173 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: COLUMN study_plan_tasks.is_completed; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -519,7 +521,7 @@ COMMENT ON COLUMN public.study_plan_tasks.is_completed IS 'Checkbox state — TR
 
 
 --
--- TOC entry 5169 (class 0 OID 0)
+-- TOC entry 5174 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: COLUMN study_plan_tasks.completed_at; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -544,7 +546,7 @@ CREATE SEQUENCE public.study_plan_tasks_task_id_seq
 ALTER SEQUENCE public.study_plan_tasks_task_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5170 (class 0 OID 0)
+-- TOC entry 5175 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: study_plan_tasks_task_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -564,6 +566,8 @@ CREATE TABLE public.study_plans (
     progress numeric(5,2) DEFAULT 0.00 NOT NULL,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     updated_at timestamp without time zone DEFAULT now() NOT NULL,
+    duration_weeks integer DEFAULT 8 NOT NULL,
+    study_hours_per_week integer DEFAULT 0 NOT NULL,
     CONSTRAINT study_plans_progress_check CHECK (((progress >= (0)::numeric) AND (progress <= (100)::numeric)))
 );
 
@@ -571,7 +575,7 @@ CREATE TABLE public.study_plans (
 ALTER TABLE public.study_plans OWNER TO postgres;
 
 --
--- TOC entry 5171 (class 0 OID 0)
+-- TOC entry 5176 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: TABLE study_plans; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -580,7 +584,7 @@ COMMENT ON TABLE public.study_plans IS 'Top-level 8-week study plan linked to an
 
 
 --
--- TOC entry 5172 (class 0 OID 0)
+-- TOC entry 5177 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: COLUMN study_plans.role_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -589,7 +593,7 @@ COMMENT ON COLUMN public.study_plans.role_id IS 'Role tab selected on Screen 4 �
 
 
 --
--- TOC entry 5173 (class 0 OID 0)
+-- TOC entry 5178 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: COLUMN study_plans.progress; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -614,7 +618,7 @@ CREATE SEQUENCE public.study_plans_study_plan_id_seq
 ALTER SEQUENCE public.study_plans_study_plan_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5174 (class 0 OID 0)
+-- TOC entry 5179 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: study_plans_study_plan_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -630,7 +634,6 @@ ALTER SEQUENCE public.study_plans_study_plan_id_seq OWNED BY public.study_plans.
 CREATE TABLE public.users (
     user_id integer NOT NULL,
     name character varying(100) NOT NULL,
-    telephone character varying(20),
     email character varying(255) NOT NULL,
     role_id integer NOT NULL,
     experience public.experience_level NOT NULL,
@@ -644,7 +647,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 5175 (class 0 OID 0)
+-- TOC entry 5180 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: TABLE users; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -653,7 +656,7 @@ COMMENT ON TABLE public.users IS 'User accounts created during onboarding (Scree
 
 
 --
--- TOC entry 5176 (class 0 OID 0)
+-- TOC entry 5181 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN users.user_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -662,7 +665,7 @@ COMMENT ON COLUMN public.users.user_id IS 'Auto-incremented primary key';
 
 
 --
--- TOC entry 5177 (class 0 OID 0)
+-- TOC entry 5182 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN users.email; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -671,7 +674,7 @@ COMMENT ON COLUMN public.users.email IS 'Must be unique — used as account iden
 
 
 --
--- TOC entry 5178 (class 0 OID 0)
+-- TOC entry 5183 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN users.role_id; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -680,7 +683,7 @@ COMMENT ON COLUMN public.users.role_id IS 'FK → roles: target job role selecte
 
 
 --
--- TOC entry 5179 (class 0 OID 0)
+-- TOC entry 5184 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN users.experience; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -689,7 +692,7 @@ COMMENT ON COLUMN public.users.experience IS 'Experience level: junior | mid | s
 
 
 --
--- TOC entry 5180 (class 0 OID 0)
+-- TOC entry 5185 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN users.study_hour; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -698,7 +701,7 @@ COMMENT ON COLUMN public.users.study_hour IS 'Preferred weekly study hours (1–
 
 
 --
--- TOC entry 5181 (class 0 OID 0)
+-- TOC entry 5186 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: COLUMN users.updated_at; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -723,7 +726,7 @@ CREATE SEQUENCE public.users_user_id_seq
 ALTER SEQUENCE public.users_user_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5182 (class 0 OID 0)
+-- TOC entry 5187 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -764,7 +767,7 @@ ALTER TABLE ONLY public.roles ALTER COLUMN role_id SET DEFAULT nextval('public.r
 
 
 --
--- TOC entry 4918 (class 2604 OID 18373)
+-- TOC entry 4920 (class 2604 OID 18373)
 -- Name: study_plan_details detail_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -772,7 +775,7 @@ ALTER TABLE ONLY public.study_plan_details ALTER COLUMN detail_id SET DEFAULT ne
 
 
 --
--- TOC entry 4922 (class 2604 OID 18414)
+-- TOC entry 4924 (class 2604 OID 18414)
 -- Name: study_plan_resources resource_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -780,7 +783,7 @@ ALTER TABLE ONLY public.study_plan_resources ALTER COLUMN resource_id SET DEFAUL
 
 
 --
--- TOC entry 4920 (class 2604 OID 18395)
+-- TOC entry 4922 (class 2604 OID 18395)
 -- Name: study_plan_tasks task_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -804,178 +807,239 @@ ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.u
 
 
 --
--- TOC entry 5126 (class 0 OID 18302)
+-- TOC entry 5131 (class 0 OID 18302)
 -- Dependencies: 226
 -- Data for Name: analyses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.analyses (analyze_id, user_id, resume_id, is_qualified, percentage, analyzed_at) FROM stdin;
+COPY public.analyses (analyze_id, user_id, resume_id, is_qualified, percentage, analyzed_at, motivational_summary) FROM stdin;
+1	1	1	f	72.50	2026-03-14 22:17:16.350175	You're 72% of the way to your Data Analyst goals — great foundation! Focus on Power BI, Azure, and Machine Learning to close the gap.
 \.
 
 
 --
--- TOC entry 5128 (class 0 OID 18327)
+-- TOC entry 5133 (class 0 OID 18327)
 -- Dependencies: 228
 -- Data for Name: analyze_skills; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.analyze_skills (skill_id, analyze_id, skill_name, status) FROM stdin;
+1	1	Python	have
+2	1	SQL	have
+3	1	Excel	have
+4	1	Tableau	have
+5	1	Data Cleaning	have
+6	1	Statistics	have
+7	1	Power BI	must_develop
+8	1	Azure	must_develop
+9	1	Machine Learning	must_develop
+10	1	Spark	nice_develop
+11	1	dbt	nice_develop
+12	1	Looker	nice_develop
 \.
 
 
 --
--- TOC entry 5124 (class 0 OID 18282)
+-- TOC entry 5129 (class 0 OID 18282)
 -- Dependencies: 224
 -- Data for Name: resumes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.resumes (resume_id, user_id, file_path, file_type, uploaded_at) FROM stdin;
+1	1	/uploads/resume_alex_johnson.pdf	pdf	2026-03-14 22:17:16.350175
 \.
 
 
 --
--- TOC entry 5120 (class 0 OID 18246)
+-- TOC entry 5125 (class 0 OID 18246)
 -- Dependencies: 220
 -- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.roles (role_id, role_name) FROM stdin;
+1	Data Analyst
+2	BI Analyst
+3	Data Engineer
 \.
 
 
 --
--- TOC entry 5132 (class 0 OID 18370)
+-- TOC entry 5137 (class 0 OID 18370)
 -- Dependencies: 232
 -- Data for Name: study_plan_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.study_plan_details (detail_id, study_plan_id, week_number, name, estimated_hour, is_completed) FROM stdin;
+1	1	1	Power BI Fundamentals	10	t
+2	1	2	Azure Data Fundamentals	10	t
+3	1	3	Machine Learning Intro	10	f
+4	1	4	Advanced SQL & Optimisation	10	f
+5	1	5	Data Storytelling & Dashboards	10	f
+6	1	6	dbt & Data Modelling	10	f
+7	1	7	Portfolio Project	10	f
+8	1	8	Job Application Prep	10	f
 \.
 
 
 --
--- TOC entry 5136 (class 0 OID 18411)
+-- TOC entry 5141 (class 0 OID 18411)
 -- Dependencies: 236
 -- Data for Name: study_plan_resources; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.study_plan_resources (resource_id, detail_id, name, resource_link, format) FROM stdin;
+1	1	Microsoft Learn — Power BI Fundamentals	https://learn.microsoft.com/en-us/training/paths/get-started-power-bi/	Free Course
+2	1	Guy in a Cube — YouTube Power BI Series	https://www.youtube.com/@GuyInACube	Video
+3	2	Microsoft Learn — DP-900 Path	https://learn.microsoft.com/en-us/certifications/exams/dp-900	Free Course
+4	2	John Savill's Azure Study Cram	https://www.youtube.com/@NTFAQGuy	Video
+5	3	Coursera — Machine Learning Specialization	https://www.coursera.org/specializations/machine-learning-introduction	Course
+6	3	Kaggle — Intro to Machine Learning	https://www.kaggle.com/learn/intro-to-machine-learning	Hands-on
+7	4	Mode Analytics SQL Tutorial	https://mode.com/sql-tutorial/	Free Course
+8	6	dbt Fundamentals Free Certification	https://courses.getdbt.com/courses/fundamentals	Free Course
 \.
 
 
 --
--- TOC entry 5134 (class 0 OID 18392)
+-- TOC entry 5139 (class 0 OID 18392)
 -- Dependencies: 234
 -- Data for Name: study_plan_tasks; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.study_plan_tasks (task_id, detail_id, name, is_completed, completed_at) FROM stdin;
+1	1	Complete the Power BI Desktop Getting Started tutorial on Microsoft Learn	t	2026-03-08 22:17:16.350175
+2	1	Build your first dashboard using the sample Superstore dataset	t	2026-03-10 22:17:16.350175
+3	1	Practice DAX basics: SUM, CALCULATE, FILTER functions	f	\N
+4	2	Set up a free Azure account and explore the portal	t	2026-03-11 22:17:16.350175
+5	2	Complete DP-900 Azure Data Fundamentals prep course	t	2026-03-12 22:17:16.350175
+6	2	Practice creating Azure Blob Storage and SQL Database instances	t	2026-03-13 22:17:16.350175
+7	2	Take the DP-900 practice exam	t	2026-03-14 10:17:16.350175
+8	3	Complete Andrew Ng's ML Crash Course Week 1 & 2	f	\N
+9	3	Implement a basic linear regression model using scikit-learn	f	\N
+10	3	Apply model to a real dataset from Kaggle	f	\N
+11	4	Practice window functions: ROW_NUMBER, RANK, LAG, LEAD	f	\N
+12	4	Write CTEs and subqueries on real datasets	f	\N
+13	4	Complete 10 LeetCode SQL Medium questions	f	\N
+14	4	Review query execution plans and indexing basics	f	\N
+15	5	Study chart selection frameworks and data-ink ratio principles	f	\N
+16	5	Build an end-to-end dashboard in Power BI with a real dataset	f	\N
+17	5	Present dashboard findings in a written summary	f	\N
+18	6	Complete the dbt Fundamentals free certification course	f	\N
+19	6	Set up a local dbt project connected to a sample database	f	\N
+20	6	Build models, tests, and documentation in dbt	f	\N
+21	7	Build an end-to-end capstone: data ingestion → SQL → Power BI dashboard	f	\N
+22	7	Publish project to GitHub with a clear README	f	\N
+23	8	Update resume with new skills and portfolio project	f	\N
+24	8	Update LinkedIn profile with certifications and project	f	\N
+25	8	Practise 10 common Data Analyst interview questions	f	\N
+26	8	Apply to 5 Data Analyst roles on Seek and LinkedIn Australia	f	\N
 \.
 
 
 --
--- TOC entry 5130 (class 0 OID 18343)
+-- TOC entry 5135 (class 0 OID 18343)
 -- Dependencies: 230
 -- Data for Name: study_plans; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.study_plans (study_plan_id, analyze_id, role_id, progress, created_at, updated_at) FROM stdin;
+COPY public.study_plans (study_plan_id, analyze_id, role_id, progress, created_at, updated_at, duration_weeks, study_hours_per_week) FROM stdin;
+1	1	1	25.00	2026-03-14 22:17:16.350175	2026-03-14 22:17:16.350175	8	10
 \.
 
 
 --
--- TOC entry 5122 (class 0 OID 18257)
+-- TOC entry 5127 (class 0 OID 18257)
 -- Dependencies: 222
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (user_id, name, telephone, email, role_id, experience, study_hour, created_at, updated_at) FROM stdin;
+COPY public.users (user_id, name, email, role_id, experience, study_hour, created_at, updated_at) FROM stdin;
+1	Alex Johnson	alex.johnson@email.com	1	junior	10	2026-03-14 22:17:16.350175	2026-03-14 22:17:16.350175
 \.
 
 
 --
--- TOC entry 5183 (class 0 OID 0)
+-- TOC entry 5188 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: analyses_analyze_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.analyses_analyze_id_seq', 1, false);
-
-
---
--- TOC entry 5184 (class 0 OID 0)
--- Dependencies: 227
--- Name: analyze_skills_skill_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.analyze_skills_skill_id_seq', 1, false);
-
-
---
--- TOC entry 5185 (class 0 OID 0)
--- Dependencies: 223
--- Name: resumes_resume_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.resumes_resume_id_seq', 1, false);
-
-
---
--- TOC entry 5186 (class 0 OID 0)
--- Dependencies: 219
--- Name: roles_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.roles_role_id_seq', 1, false);
-
-
---
--- TOC entry 5187 (class 0 OID 0)
--- Dependencies: 231
--- Name: study_plan_details_detail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.study_plan_details_detail_id_seq', 1, false);
-
-
---
--- TOC entry 5188 (class 0 OID 0)
--- Dependencies: 235
--- Name: study_plan_resources_resource_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.study_plan_resources_resource_id_seq', 1, false);
+SELECT pg_catalog.setval('public.analyses_analyze_id_seq', 1, true);
 
 
 --
 -- TOC entry 5189 (class 0 OID 0)
--- Dependencies: 233
--- Name: study_plan_tasks_task_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Dependencies: 227
+-- Name: analyze_skills_skill_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.study_plan_tasks_task_id_seq', 1, false);
+SELECT pg_catalog.setval('public.analyze_skills_skill_id_seq', 12, true);
 
 
 --
 -- TOC entry 5190 (class 0 OID 0)
--- Dependencies: 229
--- Name: study_plans_study_plan_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Dependencies: 223
+-- Name: resumes_resume_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.study_plans_study_plan_id_seq', 1, false);
+SELECT pg_catalog.setval('public.resumes_resume_id_seq', 1, true);
 
 
 --
 -- TOC entry 5191 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: roles_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.roles_role_id_seq', 3, true);
+
+
+--
+-- TOC entry 5192 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: study_plan_details_detail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.study_plan_details_detail_id_seq', 8, true);
+
+
+--
+-- TOC entry 5193 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: study_plan_resources_resource_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.study_plan_resources_resource_id_seq', 8, true);
+
+
+--
+-- TOC entry 5194 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: study_plan_tasks_task_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.study_plan_tasks_task_id_seq', 26, true);
+
+
+--
+-- TOC entry 5195 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: study_plans_study_plan_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.study_plans_study_plan_id_seq', 1, true);
+
+
+--
+-- TOC entry 5196 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_user_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_user_id_seq', 1, true);
 
 
 --
--- TOC entry 4941 (class 2606 OID 18315)
+-- TOC entry 4944 (class 2606 OID 18315)
 -- Name: analyses analyses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -984,7 +1048,7 @@ ALTER TABLE ONLY public.analyses
 
 
 --
--- TOC entry 4945 (class 2606 OID 18336)
+-- TOC entry 4948 (class 2606 OID 18336)
 -- Name: analyze_skills analyze_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -993,7 +1057,7 @@ ALTER TABLE ONLY public.analyze_skills
 
 
 --
--- TOC entry 4939 (class 2606 OID 18295)
+-- TOC entry 4942 (class 2606 OID 18295)
 -- Name: resumes resumes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1002,7 +1066,7 @@ ALTER TABLE ONLY public.resumes
 
 
 --
--- TOC entry 4929 (class 2606 OID 18253)
+-- TOC entry 4932 (class 2606 OID 18253)
 -- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1011,7 +1075,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 4931 (class 2606 OID 18255)
+-- TOC entry 4934 (class 2606 OID 18255)
 -- Name: roles roles_role_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1020,7 +1084,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 4953 (class 2606 OID 18383)
+-- TOC entry 4958 (class 2606 OID 18383)
 -- Name: study_plan_details study_plan_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1029,7 +1093,7 @@ ALTER TABLE ONLY public.study_plan_details
 
 
 --
--- TOC entry 4961 (class 2606 OID 18421)
+-- TOC entry 4966 (class 2606 OID 18421)
 -- Name: study_plan_resources study_plan_resources_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1038,7 +1102,7 @@ ALTER TABLE ONLY public.study_plan_resources
 
 
 --
--- TOC entry 4958 (class 2606 OID 18404)
+-- TOC entry 4963 (class 2606 OID 18404)
 -- Name: study_plan_tasks study_plan_tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1047,7 +1111,7 @@ ALTER TABLE ONLY public.study_plan_tasks
 
 
 --
--- TOC entry 4950 (class 2606 OID 18358)
+-- TOC entry 4953 (class 2606 OID 18358)
 -- Name: study_plans study_plans_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1056,7 +1120,7 @@ ALTER TABLE ONLY public.study_plans
 
 
 --
--- TOC entry 4955 (class 2606 OID 18385)
+-- TOC entry 4960 (class 2606 OID 18385)
 -- Name: study_plan_details uq_sdetail_week; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1065,7 +1129,16 @@ ALTER TABLE ONLY public.study_plan_details
 
 
 --
--- TOC entry 4934 (class 2606 OID 18275)
+-- TOC entry 4955 (class 2606 OID 18486)
+-- Name: study_plans uq_study_plans_analyze_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.study_plans
+    ADD CONSTRAINT uq_study_plans_analyze_id UNIQUE (analyze_id);
+
+
+--
+-- TOC entry 4937 (class 2606 OID 18275)
 -- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1074,7 +1147,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4936 (class 2606 OID 18273)
+-- TOC entry 4939 (class 2606 OID 18273)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1083,7 +1156,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 4942 (class 1259 OID 18430)
+-- TOC entry 4945 (class 1259 OID 18430)
 -- Name: idx_analyses_resume; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1091,7 +1164,7 @@ CREATE INDEX idx_analyses_resume ON public.analyses USING btree (resume_id);
 
 
 --
--- TOC entry 4943 (class 1259 OID 18429)
+-- TOC entry 4946 (class 1259 OID 18429)
 -- Name: idx_analyses_user; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1099,7 +1172,7 @@ CREATE INDEX idx_analyses_user ON public.analyses USING btree (user_id);
 
 
 --
--- TOC entry 4946 (class 1259 OID 18431)
+-- TOC entry 4949 (class 1259 OID 18431)
 -- Name: idx_askills_analysis; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1107,7 +1180,7 @@ CREATE INDEX idx_askills_analysis ON public.analyze_skills USING btree (analyze_
 
 
 --
--- TOC entry 4937 (class 1259 OID 18428)
+-- TOC entry 4940 (class 1259 OID 18428)
 -- Name: idx_resumes_user; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1115,7 +1188,7 @@ CREATE INDEX idx_resumes_user ON public.resumes USING btree (user_id);
 
 
 --
--- TOC entry 4951 (class 1259 OID 18434)
+-- TOC entry 4956 (class 1259 OID 18434)
 -- Name: idx_sdetail_plan; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1123,7 +1196,7 @@ CREATE INDEX idx_sdetail_plan ON public.study_plan_details USING btree (study_pl
 
 
 --
--- TOC entry 4947 (class 1259 OID 18432)
+-- TOC entry 4950 (class 1259 OID 18432)
 -- Name: idx_splan_analysis; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1131,7 +1204,7 @@ CREATE INDEX idx_splan_analysis ON public.study_plans USING btree (analyze_id);
 
 
 --
--- TOC entry 4948 (class 1259 OID 18433)
+-- TOC entry 4951 (class 1259 OID 18433)
 -- Name: idx_splan_role; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1139,7 +1212,7 @@ CREATE INDEX idx_splan_role ON public.study_plans USING btree (role_id);
 
 
 --
--- TOC entry 4959 (class 1259 OID 18436)
+-- TOC entry 4964 (class 1259 OID 18436)
 -- Name: idx_sresource_detail; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1147,7 +1220,7 @@ CREATE INDEX idx_sresource_detail ON public.study_plan_resources USING btree (de
 
 
 --
--- TOC entry 4956 (class 1259 OID 18435)
+-- TOC entry 4961 (class 1259 OID 18435)
 -- Name: idx_stask_detail; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1155,7 +1228,7 @@ CREATE INDEX idx_stask_detail ON public.study_plan_tasks USING btree (detail_id)
 
 
 --
--- TOC entry 4932 (class 1259 OID 18427)
+-- TOC entry 4935 (class 1259 OID 18427)
 -- Name: idx_users_role; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1163,7 +1236,7 @@ CREATE INDEX idx_users_role ON public.users USING btree (role_id);
 
 
 --
--- TOC entry 4964 (class 2606 OID 18321)
+-- TOC entry 4969 (class 2606 OID 18321)
 -- Name: analyses fk_analyses_resume; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1172,7 +1245,7 @@ ALTER TABLE ONLY public.analyses
 
 
 --
--- TOC entry 4965 (class 2606 OID 18316)
+-- TOC entry 4970 (class 2606 OID 18316)
 -- Name: analyses fk_analyses_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1181,7 +1254,7 @@ ALTER TABLE ONLY public.analyses
 
 
 --
--- TOC entry 4966 (class 2606 OID 18337)
+-- TOC entry 4971 (class 2606 OID 18337)
 -- Name: analyze_skills fk_askills_analysis; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1190,7 +1263,7 @@ ALTER TABLE ONLY public.analyze_skills
 
 
 --
--- TOC entry 4963 (class 2606 OID 18296)
+-- TOC entry 4968 (class 2606 OID 18296)
 -- Name: resumes fk_resumes_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1199,7 +1272,7 @@ ALTER TABLE ONLY public.resumes
 
 
 --
--- TOC entry 4969 (class 2606 OID 18386)
+-- TOC entry 4974 (class 2606 OID 18386)
 -- Name: study_plan_details fk_sdetail_plan; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1208,7 +1281,7 @@ ALTER TABLE ONLY public.study_plan_details
 
 
 --
--- TOC entry 4967 (class 2606 OID 18359)
+-- TOC entry 4972 (class 2606 OID 18359)
 -- Name: study_plans fk_splan_analysis; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1217,7 +1290,7 @@ ALTER TABLE ONLY public.study_plans
 
 
 --
--- TOC entry 4968 (class 2606 OID 18364)
+-- TOC entry 4973 (class 2606 OID 18364)
 -- Name: study_plans fk_splan_role; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1226,7 +1299,7 @@ ALTER TABLE ONLY public.study_plans
 
 
 --
--- TOC entry 4971 (class 2606 OID 18422)
+-- TOC entry 4976 (class 2606 OID 18422)
 -- Name: study_plan_resources fk_sresource_detail; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1235,7 +1308,7 @@ ALTER TABLE ONLY public.study_plan_resources
 
 
 --
--- TOC entry 4970 (class 2606 OID 18405)
+-- TOC entry 4975 (class 2606 OID 18405)
 -- Name: study_plan_tasks fk_stask_detail; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1244,7 +1317,7 @@ ALTER TABLE ONLY public.study_plan_tasks
 
 
 --
--- TOC entry 4962 (class 2606 OID 18276)
+-- TOC entry 4967 (class 2606 OID 18276)
 -- Name: users fk_users_role; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1252,11 +1325,11 @@ ALTER TABLE ONLY public.users
     ADD CONSTRAINT fk_users_role FOREIGN KEY (role_id) REFERENCES public.roles(role_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
--- Completed on 2026-03-09 11:14:16
+-- Completed on 2026-03-14 22:24:03
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict FlnyuLvDKR9AMWjguAwMsBm91Y8xHMxXaOqcJitqHA6ggoZmsCrHHoG3mw2gIAF
+\unrestrict BUDlM4JaD9xmyXEOHYxdnTUgsEGW0q7xgVDOwGI1xNk1ekw6MaMyfAJfOnxuMs4
 
