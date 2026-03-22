@@ -2,7 +2,6 @@ from typing import Any
 import httpx
 from app.core.config import settings
 
-
 BASE_URL = "https://api.adzuna.com/v1/api/jobs"
 
 
@@ -10,7 +9,7 @@ async def search_jobs_by_role(
     role: str,
     location: str = "Sydney",
     page: int = 1,
-    results_per_page: int = 10
+    results_per_page: int = 10,
 ) -> list[dict[str, Any]]:
     url = f"{BASE_URL}/{settings.ADZUNA_COUNTRY}/search/{page}"
 
@@ -23,10 +22,20 @@ async def search_jobs_by_role(
         "content-type": "application/json",
     }
 
-    async with httpx.AsyncClient(timeout=20) as client:
-        response = await client.get(url, params=params)
-        response.raise_for_status()
-        data = response.json()
+    timeout = httpx.Timeout(20.0, connect=10.0)
+
+    try:
+        async with httpx.AsyncClient(timeout=timeout) as client:
+            response = await client.get(url, params=params)
+            response.raise_for_status()
+            data = response.json()
+
+    except httpx.TimeoutException:
+        raise Exception("Adzuna request timed out.")
+    except httpx.HTTPStatusError as e:
+        raise Exception(f"Adzuna HTTP error: {e.response.status_code} - {e.response.text}")
+    except Exception as e:
+        raise Exception(f"Adzuna request failed: {str(e)}")
 
     jobs = []
     for item in data.get("results", []):
