@@ -1,50 +1,63 @@
-AUSkillPath: AI-Driven Study Plan Recommender Based on Australian Tech Job Market Trends
-1. Problem Statement
-The Australian technology job market is highly competitive and rapidly evolving. Students often struggle to understand:
-Which skills are most in demand for specific roles (e.g., Data Analyst, BI Analyst)
-How their current skillset compares to market expectations
-What structured learning path they should follow to close their skills gap
-Existing platforms (e.g., LinkedIn) provide job matching or general skill insights, but they do not offer a data-driven, personalised study roadmap based on local job market analytics.
-This project proposes an AI-powered system that performs semantic skill gap analysis and generates structured study plans.
+# 🤖 AUSkillPath — AI Backend Module
 
-Project Description:
-The system is an AI-powered web application that integrates Natural Language Processing via a Large Language Model to analyze resume content and generate a personalized, structured weekly study plan based on Australian job market role requirements.
-It combines:
-Modern frontend framework (Next.js)
-High-performance API backend (FastAPI)
-Relational database (PostgreSQL)
-Containerized deployment (Docker)
-AI-driven semantic reasoning (OpenAI LLM)
+##  Overview
+This backend handles AI-powered features:
+- Resume text extraction
+- Skill gap analysis (Ollama)
+- Job description generation (Adzuna)
+- Study plan generation (Ollama)
 
+---
 
-2. Objectives
-The main objectives of this project are:
-Enable resume upload in PDF or DOCX format.
-Extract and store resume text using automated parsing.
-Compare resume content against predefined job role skill templates.
-Integrate a Large Language Model (LLM) to perform semantic skill gap analysis.
-Determine whether a candidate meets qualification thresholds.
-Generate structured weekly study plans based on:
-Missing skills
-User-defined study duration
+##  AI Workflow
+Resume → Text Extraction → AI Analysis → Job Fetch → Study Plan → Frontend
 
-Store analysis results in a relational database.
-Provide a user-friendly web interface for interaction.
+---
 
-3. Scope
-In Scope
-Resume upload and text extraction.
-AI-based skill gap analysis.
-Role-based skill template comparison.
-Personalized weekly study plan generation.
-Qualification threshold evaluation.
-Database storage of results.
-Docker-based deployment.
-Out of Scope
-Direct job application submission.
-Real-time scraping of Australian job portals.
-Certification tracking or enrollment automation.
-Multi-language resume support (English only in current version).
-Advanced authentication and user account management (basic user_id used).
+##  Technologies
+- FastAPI
+- Ollama (LLM)
+- Adzuna API
+- httpx
+- PyMuPDF
+- python-docx
+
+---
+
+##  Setup
+
+### 1. Create virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
 
 
+### 2. Install dependencies
+pip install fastapi uvicorn httpx python-dotenv pymupdf python-docx
+
+
+### 3. Run backend
+uvicorn app.main:app --reload --port 8000
+
+
+---
+
+## 🔌 API Endpoints
+
+### Generate Study Plan
+POST /study-plan/generate
+
+### Fetch Jobs
+POST /jobs/search
+
+---
+
+## Notes
+- No hardcoded study plans
+- Fully AI-generated outputs
+- Ollama must be running locally
+
+---
+
+## Author
+Dinithi Nimaya  
+AI Backend Developer

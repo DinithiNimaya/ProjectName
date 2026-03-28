@@ -50,6 +50,13 @@ async def generate_plan(
 
     except HTTPException:
         raise
+
+    except RuntimeError as e:
+        raise HTTPException(
+            status_code=502,
+            detail=str(e)
+        )
+
     except Exception as e:
         raise HTTPException(
             status_code=500,
